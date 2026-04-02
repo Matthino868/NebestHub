@@ -11,9 +11,6 @@ Currently, two official plugins are available:
 
 The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## React Hooks
-- [Documentation](https://react.dev/reference/react/hooks)
-
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
@@ -73,4 +70,74 @@ export default defineConfig([
     },
   },
 ])
+```
+
+# Notes - Recommendations
+
+## React Hooks
+- [Documentation](https://react.dev/reference/react/hooks)
+
+## Recommended Folder Structure 
+
+```
+src/
+  assets/
+    styles/
+      app.css
+	  index.css
+      variables.css
+
+  components/
+    layout/
+      AppShell.tsx
+      Sidebar.tsx
+      Topbar.tsx
+
+    dashboard/
+      HeroCard.tsx
+      AgentCard.tsx
+
+    settings/
+      SettingsHero.tsx
+      SettingsSection.tsx
+      SettingRow.tsx
+
+    myAgents/
+      AgentBuilderCard.tsx
+      AgentSourceCard.tsx
+      AgentTemplateCard.tsx
+
+    common/
+      Icon.tsx
+      Badge.tsx
+      Toggle.tsx
+      Button.tsx
+      Card.tsx
+
+  pages/
+    DashboardPage.tsx
+
+  data/
+    data.ts
+    settings.ts
+    agents.ts
+
+  services/
+    Service.ts
+
+  types/
+    app.ts
+    chat.ts
+    dashboard.ts
+    settings.ts
+
+  hooks/
+    useTheme.ts
+
+  utils/
+    format.ts
+    constants.ts
+
+  App.tsx
+  main.tsx
 ```
