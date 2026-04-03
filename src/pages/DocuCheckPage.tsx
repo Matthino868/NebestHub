@@ -41,6 +41,7 @@ export default function DocuCheckPage() {
 		[selectedOptions],
 	);
 
+
 	const canStartAnalysis = Boolean(selectedFile) && chosenOptions.length > 0;
 
 	const readFileContent = async (file: File) => {
