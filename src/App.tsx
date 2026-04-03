@@ -1,122 +1,110 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-
-import './assets/styles/App.css'
-
+import { useState } from "react";
+import { NavLink, Navigate, Route, Routes } from "react-router";
+import { useAuth } from "./Components/AuthProvider";
+import DocuCheck from "./pages/DocuCheckPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import HomePage from "./pages/HomePage";
+import ProjectAccessPage from "./pages/ProjectAccessPage";
+import "./assets/styles/portal-layout.css";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { LuHouse, LuFileCheck2, LuFolderOpen, LuInfo, LuMail } from "react-icons/lu";
 function App() {
-  const [count, setCount] = useState(0)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { currentUser, logout } = useAuth();
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
+    <div className="portal-shell">
+      <header className="portal-topbar">
         <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          type="button"
+          className="menu-toggle"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-label="Open menu"
         >
-          Count is {count}
+          <RxHamburgerMenu />
         </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        <div className="portal-brand" aria-label="Nebest Workspace">
+          <img src="/Logo_Nebest_transparant.png" alt="Nebest" className="portal-brand-logo" />
+          <span className="portal-brand-text">Workspace</span>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {currentUser ? (
+          <div className="topbar-user">
+            <div className="topbar-user-text">
+              <span className="topbar-user-label">Signed in as</span>
+              <strong className="topbar-user-name">{currentUser}</strong>
+            </div>
+            <button type="button" className="auth-logout" onClick={logout}>
+              Logout
+            </button>
+          </div>
+        ) : null}
+      </header>
+
+      {menuOpen ? <button type="button" className="side-overlay" onClick={closeMenu} aria-label="Close menu" /> : null}
+
+      <aside className={`side-menu ${menuOpen ? "open" : ""}`}>
+        <h2 className="side-title">Menu</h2>
+        <nav className="menu-links">
+          <NavLink
+            to="/"
+            className={({ isActive }) => `menu-link ${isActive ? "active" : ""}`}
+            onClick={closeMenu}
+            end
+          >
+            <LuHouse className="menu-link-icon" />
+            Home
+          </NavLink>
+          <NavLink
+            to="/docucheck"
+            className={({ isActive }) => `menu-link ${isActive ? "active" : ""}`}
+            onClick={closeMenu}
+          >
+            <LuFileCheck2 className="menu-link-icon" />
+            DocuCheck
+          </NavLink>
+          <NavLink
+            to="/projecten"
+            className={({ isActive }) => `menu-link ${isActive ? "active" : ""}`}
+            onClick={closeMenu}
+          >
+            <LuFolderOpen className="menu-link-icon" />
+            Projecten
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) => `menu-link ${isActive ? "active" : ""}`}
+            onClick={closeMenu}
+          >
+            <LuInfo className="menu-link-icon" />
+            About
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) => `menu-link ${isActive ? "active" : ""}`}
+            onClick={closeMenu}
+          >
+            <LuMail className="menu-link-icon" />
+            Contact
+          </NavLink>
+        </nav>
+      </aside>
+
+      <main className="portal-content">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/docucheck" element={<DocuCheck />} />
+          <Route path="/projecten" element={<ProjectAccessPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
